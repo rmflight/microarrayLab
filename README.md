@@ -24,4 +24,4 @@ We are also going to examine the following dataset:
 
 GEO [GSE10797](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE10797)
 
-You should download the raw data files associated with the dataset from [here](ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/series/GSE10797/GSE10797%5FRAW%2Etar).
+You should download the raw data files associated with the dataset from [here](http://www.ncbi.nlm.nih.gov/geosuppl/?acc=GSE10797).
