@@ -5,3 +5,20 @@ problems with finding and calculating spot intensities. Therefore, this lab will
 concentrate on exploring data from public databases and performing a basic analysis
 using open-source tools such as [`Bioconductor`](http://bioconductor.org).
 
+## Exploration
+
+### Data Sources
+
+Currently DNA microarray data is deposited in 
+ * [GEO](http://www.ncbi.nlm.nih.gov/geo/) 
+ * [ArrayExpress](http://www.ebi.ac.uk/arrayexpress/)
+ 
+Provide a rich source of raw data for analysis.
+
+### Bioconductor
+
+[`Bioconductor`](http://bioconductor.org) is a set of `R` libraries specifically
+developed for high-throughput biological analysis
+ * Originally geared towards DNA microarray
+ * Now moving more into other -omics and RNASeq
+ 
