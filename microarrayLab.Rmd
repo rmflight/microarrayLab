@@ -22,3 +22,4 @@ developed for high-throughput biological analysis
  * Originally geared towards DNA microarray
  * Now moving more into other -omics and RNASeq
  
+help
