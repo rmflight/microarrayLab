@@ -1,0 +1,7 @@
+# Microarray Lab
+
+Current arrays used (including Affymetrix(r) and Agilent(r)) tend to have no 
+problems with finding and calculating spot intensities. Therefore, this lab will 
+concentrate on exploring data from public databases and performing a basic analysis
+using open-source tools such as [`Bioconductor`](http://bioconductor.org).
+
