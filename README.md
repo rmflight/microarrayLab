@@ -16,8 +16,13 @@ and run the following commands:
 
 ```
 source("http://bioconductor.org/biocLite.R")
-instPackages <- c("limma", "GEOmetadb", "affy", "GEOquery", "arrayQualityMetrics")
+instPackages <- c("limma", "GEOmetadb", "affy", "GEOquery", "arrayQualityMetrics",
+"hgu133plus2cdf", "hgu133plus2.db")
 biocLite(instPackages)
+
+# also download the GEOmetadb database
+library(GEOmetadb)
+getSQLiteFile()
 ```
 
 We are also going to examine the following dataset:
