@@ -8,7 +8,7 @@ in this document, please cite this `Github` repo, and me, [Robert M Flight](http
 
 In preparation for this lab, you should install:
 
- * [R](http://cran-r.project.org)
+ * [R](http://r-project.org)
  * [RStudio](http://rstudio.org)
 
 After installation, start-up `RStudio` (or just `R` if that is what you are using),
@@ -16,6 +16,12 @@ and run the following commands:
 
 ```
 source("http://bioconductor.org/biocLite.R")
-instPackages <- c("limma", "GEOmetadb", "affy", "GEOquery")
+instPackages <- c("limma", "GEOmetadb", "affy", "GEOquery", "arrayQualityMetrics")
 biocLite(instPackages)
 ```
+
+We are also going to examine the following dataset:
+
+GEO [GSE10797](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE10797)
+
+You should download the raw data files associated with the dataset from [here](ftp://ftp.ncbi.nlm.nih.gov/pub/geo/DATA/supplementary/series/GSE10797/GSE10797%5FRAW%2Etar).
