@@ -54,7 +54,39 @@ developed for high-throughput biological analysis
  * Originally geared towards DNA microarray
  * Now moving more into other -omics and RNASeq
  
-You should have downloaded the **CEL** data for the **GSE** corresponding to GDS3324.
+You should have downloaded the **CEL** data for the **GSE** corresponding to [GDS3324](http://www.ncbi.nlm.nih.gov/geosuppl/?acc=GSE10797). Use `tar` or [`7zip`](http://www.7-zip.org) to extract
+the files to a directory.
 
-```{r}
-help
+Our goal is to use a standard Bioconductor workflow to process the data and get a list of genes
+out. Possibly in another lab we will examine the genes for enrichment.
+
+### GEOmetadb
+
+All of the meta-information that was searchable on the GEO website, is also contained in the 
+GEO metadb sqlite database. We can explore it offline in Bioconductor using SQL.
+
+```{r geometadb}
+require(GEOmetadb)
+con <- dbConnect("SQLite", "GEOmetadb.sqlite")
+dbListTables(con)
+
+dbListFields(con, "gsm")
+```
+
+#### Read Data
+
+Start up `RStudio` and navigate to a directory above the GSE raw files.
+
+```{r housekeeping}
+# set default compression on saves, and don't use *Factors* in data frames
+options(save.defaults=list(compress="xz"), stringsAsFactors=FALSE)
+require(affy)
+require(limma)
+require(arrayQualityMetrics)
+```
+
+```{r readData}
+celDir <- "GSE10797_RAW/"
+celNames <- dir(celDir)
+
+```
