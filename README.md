@@ -15,6 +15,7 @@ After installation, start-up `RStudio` (or just `R` if that is what you are usin
 and run the following commands:
 
 ```
+install.packages(ggplot2)
 source("http://bioconductor.org/biocLite.R")
 instPackages <- c("limma", "GEOmetadb", "affy", "GEOquery", "arrayQualityMetrics",
 "hgu133plus2cdf", "hgu133plus2.db")
