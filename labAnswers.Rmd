@@ -1,0 +1,5 @@
+Answers to questions:
+  
+Number of samples, etc: front page of GEO or ArrayExpress. ArrayExpress uses slightly different
+definitions than GEO, but seems to mostly be the same, with more data.
+

@@ -15,7 +15,9 @@ Currently DNA microarray data is deposited in
  
 These both provide a rich source of raw data for analysis. You should spend some time looking at the websites. 
 
-Can we answer some basic questions about the number of data sets in each database?
+Can we answer some basic questions about the number of data sets in each?
+
+#### GEO
 
 * How many platforms?
 * How many experiments (series)?
@@ -24,12 +26,6 @@ Can we answer some basic questions about the number of data sets in each databas
 * How many organisms represented?
 
 How hard is this information to get via the web-site?
-
-Use the [browse link](www.ncbi.nlm.nih.gov/geo/browse/) to look at the various data sets in 
-many different ways. How hard is it to find a diabetes `Series` study that uses human samples, that has CEL files available?
-
-What about all of the different `Platforms` that are based on the Affymetrix U133 Plus 2.0 chip?
-available and 
 
 ### Bioconductor
 
