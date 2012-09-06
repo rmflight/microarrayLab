@@ -54,4 +54,7 @@ developed for high-throughput biological analysis
  * Originally geared towards DNA microarray
  * Now moving more into other -omics and RNASeq
  
+You should have downloaded the **CEL** data for the **GSE** corresponding to GDS3324.
+
+```{r}
 help
