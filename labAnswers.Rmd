@@ -3,3 +3,7 @@ Answers to questions:
 Number of samples, etc: front page of GEO or ArrayExpress. ArrayExpress uses slightly different
 definitions than GEO, but seems to mostly be the same, with more data.
 
+Diabetes samples: http://www.ncbi.nlm.nih.gov/geo/browse/?view=series&search=diabetes&tax=9606&zsort=date&display=20
+
+Affy U133 Plus 2.0: http://www.ncbi.nlm.nih.gov/geo/browse/?view=platform&display=50&tax=9606&search=U133%20plus%202.0&zsort=date
+

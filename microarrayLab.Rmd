@@ -7,7 +7,7 @@ using open-source tools such as [`Bioconductor`](http://bioconductor.org).
 
 ## Exploration
 
-### Data Sources
+## Websites
 
 Currently DNA microarray data is deposited in 
  * [GEO](http://www.ncbi.nlm.nih.gov/geo/) 
@@ -25,11 +25,27 @@ Can we answer some basic questions about the number of data sets in each databas
 
 How hard is this information to get via the web-site?
 
+### Series
+
 Use the [browse link](www.ncbi.nlm.nih.gov/geo/browse/) to look at the various data sets in 
 many different ways. How hard is it to find a diabetes `Series` study that uses human samples, that has CEL files available?
 
-What about all of the different `Platforms` that are based on the Affymetrix U133 Plus 2.0 chip?
-available and 
+### GPL
+
+The official `GPL` for the Affymetrix(r) human U133 Plus 2.0 genome chip is [`GPL570`](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL570).
+However, there are a lot **alternative** platforms. Can you find them all browsing for 
+`Platforms`? 
+
+### Datasets
+
+`Datasets` are curated experiments at GEO, that allow investigation of gene expression levels
+as well as perform basic analyses using on-line tools. We will use the online tools available at GEO to examine [GDS3324](http://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3324). 
+
+What genes come up as different based on tissue and condition? Hint, there is a link on the 
+analysis page.
+
+Pick an analysis to perform. How many genes come up as differentially expressed? Are any of these the control probesets on the chip?
+ 
 
 ### Bioconductor
 
