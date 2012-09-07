@@ -333,3 +333,7 @@ rm(pmInt)
 ceIndx <- as.logical(design[,'CE'])
 neIndx <- as.logical(design[,'NE'])
 
+ceInt <- useInt[,ceIndx]
+neInt <- useInt[,neIndx]
+
+ceMn <- 
