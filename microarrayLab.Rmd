@@ -205,5 +205,31 @@ arrayQualityMetrics(rmaDat, outdir="rmaData", do.logtransform=F, intgroup=c("tis
 You should explore the ArrayQualityMetrics reports ([celDat](rawData/index.html), [rmaDat](rmaData/index.html) ) to see what types of things get reported, and how some discrepancies
 are resolved due to normalization. 
 
+```{r cleanUP}
+rm(celDat)
+```
 
+#### ProbeSet Filtering
 
+There are two opinions on filtering before diff. expression analysis. 
+ 
+ 1. Filter out the controls
+ 2. Filter out everything that may be irrelevent, including probesets with low variance and those that don't map to known genes
+ 
+Due to personal experience, and known issues with skewing results due to changing the numbers
+for multiple testing adjustment, I prefer **1**, filtering out as few items as required.
+
+#### Design Setup
+
+We want to be able to compare between the cancer and normal of each cell type, much like
+the original [paper](fulltext.pdf). So we will generate a new variable that is a combination
+of disease status and tissue, and use this in our design matrix.
+
+```{r design}
+pD <- pData(rmaDat)
+pD$cancer.tissue <- paste(pD$cancerType, pD$tissueType, sep=".")
+
+f <- factor(pD$cancer.tissue, levels=unique(pD$cancer.tissue))
+design <- model.matrix(~0 + f)
+colnames(design) <- c("CE", "CS", "NE", "NS")
+```
