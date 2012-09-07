@@ -73,6 +73,18 @@ dbListTables(con)
 dbListFields(con, "gsm")
 ```
 
+We can do similar sorts of queries using the SQLite database as we did on the website.
+
+However, some of the information is not linked the same way in GEOmetadb. For example, it is easy to find **datasets** related to human diabetes, but more complicated to find **series**.
+```{r geoQueries}
+# Can easily find datasets for human diabetes
+sQ <- "SELECT ID, gds, description, type, sample_organism FROM gds WHERE description LIKE '%diabetes%' AND sample_organism='Homo sapiens'"
+dbRes <- dbGetQuery(con, sQ)
+dbRes
+
+sQ <- 
+```
+
 #### Read Data
 
 Start up `RStudio` and navigate to a directory above the GSE raw files.
@@ -129,6 +141,9 @@ rmaDat <- rma(celDat)
 arrayQualityMetrics(celDat, outdir="rawData", do.logtransform=T, spatial=F, intgroup=c("tissueType", "cancerType"), force=T)
 arrayQualityMetrics(rmaDat, outdir="rmaData", do.logtransform=F, intgroup=c("tissueType", "cancerType"), force=T)
 ```
+
+You should explore the ArrayQualityMetrics reports ([celDat](rawData/index.html), [rmaDat](rmaData/index.html) ) to see what types of things get reported, and how some discrepancies
+are resolved due to normalization. 
 
 
 
