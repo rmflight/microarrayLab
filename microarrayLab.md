@@ -1,4 +1,4 @@
-# Microarray Lab
+# Microarray Lab - Curr. Topics Bioinf. 2012
 
 Current arrays used (including Affymetrix(r) and Agilent(r)) tend to have no 
 problems with finding and calculating spot intensities. Therefore, this lab will 
@@ -722,16 +722,7 @@ Can we figure out which genes are diff. expressed?
 ```r
 ce.ne.Diff <- ce.ne[(ce.ne$adj.P.Val <= 0.05), ]
 ce.ne.Diff$Entrez <- unlist(mget(ce.ne.Diff$ID, hgu133a2ENTREZID, ifnotfound = NA))
-```
-
-
-See some `NA` values. i.e. there is no corresponding Entrez Gene. But Affymetrix(r) doesn't
-tend to have probesets for no reason. What else could it be?
-
-
-```r
-ce.ne.Diff$ACC <- unlist(mget(ce.ne.Diff$ID, hgu133a2ACCNUM, ifnotfound = NA))
-head(ce.ne.Diff)
+head(ce.ne.Diff, 15)
 ```
 
 ```
@@ -742,6 +733,44 @@ head(ce.ne.Diff)
 ## 19789 220425_x_at -3.869   3.198 -10.437 1.847e-15 1.019e-11 23.95   <NA>
 ## 5979  206453_s_at -3.768   4.229 -10.381 2.292e-15 1.019e-11 23.76  57447
 ## 21156   221796_at -4.567   3.385  -9.719 3.116e-14 1.154e-10 21.39   4915
+## 13041   213661_at -2.441   2.682  -9.282 1.780e-13 5.650e-10 19.80  25891
+## 4890    205363_at -3.451   2.667  -8.662 2.162e-12 6.003e-09 17.52   8424
+## 20115 220751_s_at -1.751   2.494  -8.509 4.020e-12 9.922e-09 16.95  10826
+## 5780    206254_at -2.376   2.909  -7.974 3.521e-11 7.821e-08 14.95   1950
+## 7587  208078_s_at -2.635   3.962  -7.806 6.980e-11 1.410e-07 14.32   <NA>
+## 10070 210605_s_at -2.517   3.501  -7.716 1.006e-10 1.862e-07 13.98   4240
+## 1025  201497_x_at -2.754   3.389  -7.661 1.255e-10 2.145e-07 13.78   4629
+## 11086 211685_s_at -2.676   3.336  -7.615 1.517e-10 2.407e-07 13.60  83988
+## 21630   222271_at -2.142   2.453  -7.424 3.293e-10 4.877e-07 12.88   <NA>
+```
+
+
+See some `NA` values. i.e. there is no corresponding Entrez Gene. But Affymetrix(r) doesn't
+tend to have probesets for no reason. What else could it be?
+
+
+```r
+ce.ne.Diff$ACC <- unlist(mget(ce.ne.Diff$ID, hgu133a2ACCNUM, ifnotfound = NA))
+head(ce.ne.Diff, 15)
+```
+
+```
+##                ID  logFC AveExpr       t   P.Value adj.P.Val     B Entrez
+## 22200      823_at -3.847   3.022 -15.024 1.087e-22 2.414e-18 38.57   6376
+## 3214    203687_at -3.234   2.936 -12.680 3.875e-19 4.304e-15 31.50   6376
+## 4578  205051_s_at -4.499   3.693 -11.408 4.390e-17 3.251e-13 27.31   3815
+## 19789 220425_x_at -3.869   3.198 -10.437 1.847e-15 1.019e-11 23.95   <NA>
+## 5979  206453_s_at -3.768   4.229 -10.381 2.292e-15 1.019e-11 23.76  57447
+## 21156   221796_at -4.567   3.385  -9.719 3.116e-14 1.154e-10 21.39   4915
+## 13041   213661_at -2.441   2.682  -9.282 1.780e-13 5.650e-10 19.80  25891
+## 4890    205363_at -3.451   2.667  -8.662 2.162e-12 6.003e-09 17.52   8424
+## 20115 220751_s_at -1.751   2.494  -8.509 4.020e-12 9.922e-09 16.95  10826
+## 5780    206254_at -2.376   2.909  -7.974 3.521e-11 7.821e-08 14.95   1950
+## 7587  208078_s_at -2.635   3.962  -7.806 6.980e-11 1.410e-07 14.32   <NA>
+## 10070 210605_s_at -2.517   3.501  -7.716 1.006e-10 1.862e-07 13.98   4240
+## 1025  201497_x_at -2.754   3.389  -7.661 1.255e-10 2.145e-07 13.78   4629
+## 11086 211685_s_at -2.676   3.336  -7.615 1.517e-10 2.407e-07 13.60  83988
+## 21630   222271_at -2.142   2.453  -7.424 3.293e-10 4.877e-07 12.88   <NA>
 ##             ACC
 ## 22200    U84487
 ## 3214  NM_002996
@@ -749,6 +778,15 @@ head(ce.ne.Diff)
 ## 19789 NM_017578
 ## 5979  NM_016250
 ## 21156  AA707199
+## 13041  AI671186
+## 4890  NM_003986
+## 20115 NM_016348
+## 5780  NM_001963
+## 7587  NM_030751
+## 10070  BC003610
+## 1025  NM_022844
+## 11086  AF251061
+## 21630  AV720803
 ```
 
 
@@ -764,12 +802,105 @@ pmInt <- pm(celDat)
 useProbe <- indexProbes(celDat, which = "pm", genenames = "823_at")
 
 useInt <- log2(pmInt[as.character(useProbe[[1]]), ])
-rm(pmInt)
+rm(pmInt, celDat)
 
 ceIndx <- as.logical(design[, "CE"])
 neIndx <- as.logical(design[, "NE"])
 
 ceInt <- useInt[, ceIndx]
 neInt <- useInt[, neIndx]
+
+# get summary statistics for each probe across the samples
+ce.Mn <- apply(ceInt, 1, mean)
+ce.Sd <- apply(ceInt, 1, sd)
+ne.Mn <- apply(neInt, 1, mean)
+ne.Sd <- apply(neInt, 1, sd)
+nProbe <- length(ce.Mn)
+x <- seq(1, nProbe)
+
+probeDat <- data.frame(x = rep(x, 2), mn = c(ce.Mn, ne.Mn), sd = c(ce.Sd, ne.Sd), 
+    disease = c(rep("CE", nProbe), rep("NE", nProbe)))
+
+ggplot(probeDat, aes(x = x, y = mn, colour = disease)) + geom_errorbar(aes(ymin = mn - 
+    sd, ymax = mn + sd), width = 0.1) + geom_line() + geom_point()
 ```
 
+![plot of chunk probeLevel](figure/probeLevel.png) 
+
+
+And sure enough, they really are different, right down to the probe level.
+
+
+```r
+sessionInfo()
+```
+
+```
+## R version 2.15.1 (2012-06-22)
+## Platform: i386-pc-mingw32/i386 (32-bit)
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] hgu133a2cdf_2.10.0         hgu133a2.db_2.7.1         
+##  [3] org.Hs.eg.db_2.7.1         AnnotationDbi_1.18.1      
+##  [5] ggplot2_0.9.1              arrayQualityMetrics_3.12.0
+##  [7] limma_3.12.1               genefilter_1.38.0         
+##  [9] affy_1.34.0                GEOmetadb_1.16.0          
+## [11] RSQLite_0.11.1             DBI_0.2-5                 
+## [13] GEOquery_2.23.5            Biobase_2.16.0            
+## [15] BiocGenerics_0.2.0         knitr_0.7                 
+## 
+## loaded via a namespace (and not attached):
+##  [1] affyio_1.24.0         affyPLM_1.32.0        annotate_1.34.1      
+##  [4] beadarray_2.6.0       BeadDataPackR_1.8.0   BiocInstaller_1.4.7  
+##  [7] Biostrings_2.24.1     Cairo_1.5-1           cluster_1.14.2       
+## [10] colorspace_1.1-1      dichromat_1.2-4       digest_0.5.2         
+## [13] evaluate_0.4.2        formatR_0.6           grid_2.15.1          
+## [16] Hmisc_3.9-3           hwriter_1.3           IRanges_1.14.4       
+## [19] labeling_0.1          lattice_0.20-10       latticeExtra_0.6-24  
+## [22] MASS_7.3-21           memoise_0.1           munsell_0.3          
+## [25] plyr_1.7.1            preprocessCore_1.18.0 proto_0.3-9.2        
+## [28] RColorBrewer_1.0-5    RCurl_1.91-1.1        reshape2_1.2.1       
+## [31] scales_0.2.1          setRNG_2011.11-2      splines_2.15.1       
+## [34] stats4_2.15.1         stringr_0.6.1         survival_2.36-14     
+## [37] SVGAnnotation_0.93-1  tools_2.15.1          vsn_3.24.0           
+## [40] XML_3.9-4.1           xtable_1.7-0          zlibbioc_1.2.0       
+```
+
+```r
+Sys.time()
+```
+
+```
+## [1] "2012-09-07 14:00:28 EDT"
+```
+
+
+## Note on formatting and source
+
+The original source documents for this lab are hosted on Github at http://github.com/rmflight/microarrayLab. The full repo can be downloaded as a `zip` file from that site, or you can
+clone the repo using `git://github.com/rmflight/microarrayLab.git`, or fork it on Github. 
+
+To recreate the `md` and `html` files, you will need the `R` packages `knitr` and `markdown`.
+You may also want to `source` the [changeMDRender](changeMDRender.r) file before `knitting`.
+
+Note that not all files are included in the repo, namely the required `R` packages, as well
+as the raw `CEL` files, and the `GEOmetadb.sqlite` file. These can be obtained by following
+the instructions in the [Readme](README.md)
+
+## Disclaimer
+
+This material was produced by Robert M Flight for use in the University of Louisville
+Current Topics in Bioinformatics class, fall of 2012. It was created by me for help in
+introducing open-source DNA Microarray analysis to the students of the class, and although
+I have tried to do things correctly, there may be errors. Any views expressed are those of
+myself, and not my supervisor or the University of Louisville.

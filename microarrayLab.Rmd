@@ -1,4 +1,4 @@
-# Microarray Lab
+# Microarray Lab - Curr. Topics Bioinf. 2012
 
 Current arrays used (including Affymetrix(r) and Agilent(r)) tend to have no 
 problems with finding and calculating spot intensities. Therefore, this lab will 
@@ -360,3 +360,23 @@ And sure enough, they really are different, right down to the probe level.
 sessionInfo()
 Sys.time()
 ```
+
+## Note on formatting and source
+
+The original source documents for this lab are hosted on Github at http://github.com/rmflight/microarrayLab. The full repo can be downloaded as a `zip` file from that site, or you can
+clone the repo using `git://github.com/rmflight/microarrayLab.git`, or fork it on Github. 
+
+To recreate the `md` and `html` files, you will need the `R` packages `knitr` and `markdown`.
+You may also want to `source` the [changeMDRender](changeMDRender.r) file before `knitting`.
+
+Note that not all files are included in the repo, namely the required `R` packages, as well
+as the raw `CEL` files, and the `GEOmetadb.sqlite` file. These can be obtained by following
+the instructions in the [Readme](README.md)
+
+## Disclaimer
+
+This material was produced by Robert M Flight for use in the University of Louisville
+Current Topics in Bioinformatics class, fall of 2012. It was created by me for help in
+introducing open-source DNA Microarray analysis to the students of the class, and although
+I have tried to do things correctly, there may be errors. Any views expressed are those of
+myself, and not my supervisor or the University of Louisville.
