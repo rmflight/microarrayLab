@@ -89,7 +89,7 @@ require(arrayQualityMetrics)
 ```{r readData}
 celDir <- "GSE10797_RAW"
 setwd(celDir)
-celDat <- read.affybatch(filenames=dir(),cdfname="hgu133plus2cdf")
+celDat <- read.affybatch(filenames=dir())
 
 celDat
 setwd("..")
@@ -115,9 +115,18 @@ pData(celDat) <- tmpDat
 
 .sessionInfo <- sessionInfo()
 .timedate <- Sys.time()
-save(celDat, .sessionInfo, .timedate, file="celData.RData")
+save(celDat, .sessionInfo, .timedate, file="celData2.RData")
 ```
 
-```{r qualityMetrics}
-arrayQualityMetrics(celDat, outdir="rawData", do.logtransform=T, intgroup=c("tissueType", "cancerType"), spatial=F)
+### Summarize using RMA
+
+```{r sumRMA}
+rmaDat <- rma(celDat)
 ```
+
+```{r qualityMetrics, eval=FALSE}
+arrayQualityMetrics(celDat, outdir="rawData", do.logtransform=T, spatial=F, intgroup=c("tissueType", "cancerType"), force=T)
+arrayQualityMetrics(rmaDat, outdir="rmaData", do.logtransform=F, intgroup=c("tissueType", "cancerType"), force=T)
+```
+
+
