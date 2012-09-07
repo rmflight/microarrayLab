@@ -25,16 +25,30 @@ Can we answer some basic questions about the number of data sets in each databas
 
 How hard is this information to get via the web-site?
 
+```{r answer1, echo=FALSE}
+# Number of samples, etc: front page of GEO or ArrayExpress. 
+# ArrayExpress uses slightly different definitions than GEO, 
+# but seems to mostly be the same, with more data.
+```
+
 ### Series
 
 Use the [browse link](www.ncbi.nlm.nih.gov/geo/browse/) to look at the various data sets in 
 many different ways. How hard is it to find a diabetes `Series` study that uses human samples, that has CEL files available?
+
+```{r answer2, echo=F}
+# Diabetes samples: http://www.ncbi.nlm.nih.gov/geo/browse/?view=series&search=diabetes&tax=9606&zsort=date&display=20
+```
 
 ### GPL
 
 The official `GPL` for the Affymetrix(r) human U133 Plus 2.0 genome chip is [`GPL570`](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL570).
 However, there are a lot **alternative** platforms. Can you find them all browsing for 
 `Platforms`? 
+
+```{r answer3, echo=F}
+# Affy U133 Plus 2.0: http://www.ncbi.nlm.nih.gov/geo/browse/?view=platform&display=50&tax=9606&search=U133%20plus%202.0&zsort=date
+```
 
 ### Datasets
 
@@ -75,19 +89,49 @@ dbListFields(con, "gsm")
 
 We can do similar sorts of queries using the SQLite database as we did on the website.
 
-However, some of the information is not linked the same way in GEOmetadb. For example, it is easy to find **datasets** related to human diabetes, but more complicated to find **series**.
+However, some of the information is not linked the same way in GEOmetadb. For example, it is
+easy to find **datasets** related to human diabetes, but more complicated to find **series**, 
+because the organism is *not* part of the series table. However, we can exploit the fact that 
+**GSE** is included in the **GSM** table.
+
 ```{r geoQueries}
 # Can easily find datasets for human diabetes
 sQ <- "SELECT ID, gds, description, type, sample_organism FROM gds WHERE description LIKE '%diabetes%' AND sample_organism='Homo sapiens'"
 dbRes <- dbGetQuery(con, sQ)
 dbRes
 
-sQ <- 
+sQ_gse <- "SELECT gse FROM gse WHERE title LIKE '%diabetes%'"
+db_gse <- dbGetQuery(con, sQ_gse)
+head(db_gse)
+
+gseSrch <- paste("'", db_gse$gse, "'", sep="")
+gseSrch <- paste(gseSrch, collapse=",", sep="")
+gseSrch <- paste("(", gseSrch, ")", sep="", collapse="")
+sQ_gsm <- paste("SELECT * FROM gsm WHERE series_id IN ", gseSrch, 
+                " AND organism_ch1 IN ('Homo sapiens')", sep="", collapse="")
+db_gsm <- dbGetQuery(con, sQ_gsm)
+head(db_gsm)
+dim(db_gsm)
+length(unique(db_gsm$series_id))
 ```
 
-#### Read Data
+Now what about all of the series that are attached to Affymetrix HGU 133 plus 2.0 arrays?
 
-Start up `RStudio` and navigate to a directory above the GSE raw files.
+```{r geoQ2}
+gplQ <- "SELECT gpl FROM gpl WHERE title LIKE '%U133 plus 2.0%'"
+gplRes <- dbGetQuery(con, gplQ)
+```
+
+Disconnect database when done.
+
+```{r disconnect}
+dbDisconnect(con)
+```
+
+### Differential Expression Analysis
+
+Using the data downloaded previously and `Bioconductor` functions, we will attempt to determine
+those genes that are differentially expressed. 
 
 ```{r housekeeping}
 # set default compression on saves, and don't use *Factors* in data frames
@@ -95,8 +139,9 @@ options(stringsAsFactors=FALSE)
 require(affy)
 require(limma)
 require(arrayQualityMetrics)
-
 ```
+
+#### Read Data
 
 ```{r readData, eval=FALSE}
 # not evaluated because it takes a long time on my 2GB Ram machine
@@ -107,6 +152,13 @@ celDat <- read.affybatch(filenames=dir())
 celDat
 setwd("..")
 ```
+
+Unfortunately, this method makes it difficult to know which samples belong to which class
+(cancer, normal, stroma, epithelial, etc). We can use the `GEOmetadb` to get this information, 
+however. This is required to enable proper analysis of the data.
+
+#### Sample Info
+
 ```{r generatePhenoDat, eval=FALSE}
 con <- dbConnect("SQLite", "GEOmetadb.sqlite")
 getDat <- dbGetQuery(con, "select title, gsm, series_id from gsm where series_id in ('GSE10797')")
@@ -129,12 +181,20 @@ pData(celDat) <- tmpDat
 .sessionInfo <- sessionInfo()
 .timedate <- Sys.time()
 save(celDat, .sessionInfo, .timedate, file="celData.RData")
+rm(list=ls())
 ```
+
+#### RMA Summarize
 
 ```{r sumRMA}
 load("celData.RData")
 rmaDat <- rma(celDat)
+.sessionInfo <- sessionInfo()
+.timedate <- Sys.time()
+save(.sessionInfo, .timedate, rmaDat, file="rmaData.RData")
 ```
+
+#### Quality Control
 
 ```{r qualityMetrics, eval=FALSE}
 # this also takes a long time, the files are in the git repo.
