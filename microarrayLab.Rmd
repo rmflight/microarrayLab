@@ -89,12 +89,13 @@ require(arrayQualityMetrics)
 ```{r readData}
 celDir <- "GSE10797_RAW"
 setwd(celDir)
-celDat <- read.affybatch(filenames=dir(),cdfname="hgu133plus2cdf", )
+celDat <- read.affybatch(filenames=dir(),cdfname="hgu133plus2cdf")
 
 celDat
-
+setwd("..")
 ```
 ```{r generatePhenoDat}
+con <- dbConnect("SQLite", "GEOmetadb.sqlite")
 getDat <- dbGetQuery(con, "select title, gsm, series_id from gsm where series_id in ('GSE10797')")
 splitSample <- strsplit(getDat$title, "_", fixed=T)
 head(splitSample)
@@ -111,8 +112,12 @@ head(getDat)
 head(tmpDat)
 tmpDat <- cbind(tmpDat, getDat)
 pData(celDat) <- tmpDat
+
+.sessionInfo <- sessionInfo()
+.timedate <- Sys.time()
+save(celDat, .sessionInfo, .timedate, file="celData.RData")
 ```
 
 ```{r qualityMetrics}
-arrayQualityMetrics(celDat, outdir="rawData", do.logtransform=T, intgroup="tissueType", spatial=F)
+arrayQualityMetrics(celDat, outdir="rawData", do.logtransform=T, intgroup=c("tissueType", "cancerType"), spatial=F)
 ```
