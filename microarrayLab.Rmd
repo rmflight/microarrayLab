@@ -137,6 +137,7 @@ those genes that are differentially expressed.
 # set default compression on saves, and don't use *Factors* in data frames
 options(stringsAsFactors=FALSE)
 require(affy)
+require(genefilter)
 require(limma)
 require(arrayQualityMetrics)
 ```
@@ -186,6 +187,11 @@ rm(list=ls())
 
 #### RMA Summarize
 
+`RMA` is one of the more popular methods for summarizing Affymetrix(r) GeneChip(r) data. 
+It only uses the **PM** probes, models probe behavior to do background correction, quantile
+normalization to force identical signal distributions, and then a median-polish to average
+the probe signals and generate a final value.
+
 ```{r sumRMA}
 load("celData.RData")
 rmaDat <- rma(celDat)
@@ -219,6 +225,12 @@ There are two opinions on filtering before diff. expression analysis.
 Due to personal experience, and known issues with skewing results due to changing the numbers
 for multiple testing adjustment, I prefer **1**, filtering out as few items as required.
 
+```{r filtering}
+rmaFilt <- featureFilter(rmaDat, require.entrez=FALSE, remove.dupEntrez=FALSE,
+                         feature.exclude="^AFFX")
+rmaInt <- exprs(rmaFilt) # get the actual probeset intensities
+```
+
 #### Design Setup
 
 We want to be able to compare between the cancer and normal of each cell type, much like
@@ -232,4 +244,26 @@ pD$cancer.tissue <- paste(pD$cancerType, pD$tissueType, sep=".")
 f <- factor(pD$cancer.tissue, levels=unique(pD$cancer.tissue))
 design <- model.matrix(~0 + f)
 colnames(design) <- c("CE", "CS", "NE", "NS")
+
+rm(rmaDat, rmaFilt)
+```
+
+#### Limma
+
+We are using the `limma` package for the diff. expression analysis. `limma` allows one to 
+use bayesian methods to *borrow* variance information between genes / probesets. When the 
+number of samples is large (say 20 or more), the variance estimates don't change between
+borrowing and not. However, when the number of samples is small (say 3 - 5 in each class),
+this can be much more important.
+
+`limma` has become a de-facto standard in the analysis of DNA microarrays, and that is
+partly why we use it here. We could also do a standard t-test, permuted t-tests, and lots
+of other things that have appeard in the literature.
+
+```{r limmaCalc}
+fit <- lmFit(rmaInt, design)
+contrast.matrix <- makeContrasts("CE - NE", "CS - NS", levels=design)
+
+fit2 <- contrasts.fit(fit, contrast.matrix)
+fit2 <- eBayes(fit2)
 ```
