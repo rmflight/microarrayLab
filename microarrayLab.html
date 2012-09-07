@@ -1,0 +1,850 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<title>Microarray Lab</title>
+
+<base target="_blank"/>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</head>
+
+<body>
+<h1>Microarray Lab</h1>
+
+<p>Current arrays used (including Affymetrix&reg; and Agilent&reg;) tend to have no 
+problems with finding and calculating spot intensities. Therefore, this lab will 
+concentrate on exploring data from public databases and performing a basic analysis
+using open-source tools such as <a href="http://bioconductor.org"><code>Bioconductor</code></a>.</p>
+
+<h2>Exploration</h2>
+
+<h2>Websites</h2>
+
+<p>Currently DNA microarray data is deposited in </p>
+
+<ul>
+<li><a href="http://www.ncbi.nlm.nih.gov/geo/">GEO</a> </li>
+<li><a href="http://www.ebi.ac.uk/arrayexpress/">ArrayExpress</a></li>
+</ul>
+
+<p>These both provide a rich source of raw data for analysis. You should spend some time looking at the websites. </p>
+
+<p>Can we answer some basic questions about the number of data sets in each database?</p>
+
+<ul>
+<li>How many platforms?</li>
+<li>How many experiments (series)?</li>
+<li>How many samples?</li>
+<li>How many curated datasets?</li>
+<li>How many organisms represented?</li>
+</ul>
+
+<p>How hard is this information to get via the web-site?</p>
+
+<h3>Series</h3>
+
+<p>Use the <a href="www.ncbi.nlm.nih.gov/geo/browse/">browse link</a> to look at the various data sets in 
+many different ways. How hard is it to find a diabetes <code>Series</code> study that uses human samples, that has CEL files available?</p>
+
+<h3>GPL</h3>
+
+<p>The official <code>GPL</code> for the Affymetrix&reg; human U133 Plus 2.0 genome chip is <a href="http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL570"><code>GPL570</code></a>.
+However, there are a lot <strong>alternative</strong> platforms. Can you find them all browsing for 
+<code>Platforms</code>? </p>
+
+<h3>Datasets</h3>
+
+<p><code>Datasets</code> are curated experiments at GEO, that allow investigation of gene expression levels
+as well as perform basic analyses using on-line tools. We will use the online tools available at GEO to examine <a href="http://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS3324">GDS3324</a>. </p>
+
+<p>What genes come up as different based on tissue and condition? Hint, there is a link on the 
+analysis page.</p>
+
+<p>Pick an analysis to perform. How many genes come up as differentially expressed? Are any of these the control probesets on the chip?</p>
+
+<h3>Bioconductor</h3>
+
+<p><a href="http://bioconductor.org"><code>Bioconductor</code></a> is a set of <code>R</code> libraries specifically
+developed for high-throughput biological analysis</p>
+
+<ul>
+<li>Originally geared towards DNA microarray</li>
+<li>Now moving more into other -omics and RNASeq</li>
+</ul>
+
+<p>You should have downloaded the <strong>CEL</strong> data for the <strong>GSE</strong> corresponding to <a href="http://www.ncbi.nlm.nih.gov/geosuppl/?acc=GSE10797">GDS3324</a>. Use <code>tar</code> or <a href="http://www.7-zip.org"><code>7zip</code></a> to extract
+the files to a directory.</p>
+
+<p>Our goal is to use a standard Bioconductor workflow to process the data and get a list of genes
+out. Possibly in another lab we will examine the genes for enrichment.</p>
+
+<h3>GEOmetadb</h3>
+
+<p>All of the meta-information that was searchable on the GEO website, is also contained in the 
+GEO metadb sqlite database. We can explore it offline in Bioconductor using SQL.</p>
+
+<pre><code class="r">require(GEOmetadb)
+</code></pre>
+
+<pre><code>## Loading required package: GEOmetadb
+</code></pre>
+
+<pre><code>## Loading required package: GEOquery
+</code></pre>
+
+<pre><code>## Loading required package: Biobase
+</code></pre>
+
+<pre><code>## Loading required package: BiocGenerics
+</code></pre>
+
+<pre><code>## Attaching package: &#39;BiocGenerics&#39;
+</code></pre>
+
+<pre><code>## The following object(s) are masked from &#39;package:stats&#39;:
+## 
+## xtabs
+</code></pre>
+
+<pre><code>## The following object(s) are masked from &#39;package:base&#39;:
+## 
+## anyDuplicated, cbind, colnames, duplicated, eval, Filter, Find, get,
+## intersect, lapply, Map, mapply, mget, order, paste, pmax, pmax.int, pmin,
+## pmin.int, Position, rbind, Reduce, rep.int, rownames, sapply, setdiff,
+## table, tapply, union, unique
+</code></pre>
+
+<pre><code>## Welcome to Bioconductor
+## 
+## Vignettes contain introductory material; view with &#39;browseVignettes()&#39;. To
+## cite Bioconductor, see &#39;citation(&quot;Biobase&quot;)&#39;, and for packages
+## &#39;citation(&quot;pkgname&quot;)&#39;.
+</code></pre>
+
+<pre><code>## Setting options(&#39;download.file.method.GEOquery&#39;=&#39;auto&#39;)
+</code></pre>
+
+<pre><code>## Loading required package: RSQLite
+</code></pre>
+
+<pre><code>## Loading required package: DBI
+</code></pre>
+
+<pre><code class="r">con &lt;- dbConnect(&quot;SQLite&quot;, &quot;GEOmetadb.sqlite&quot;)
+dbListTables(con)
+</code></pre>
+
+<pre><code>##  [1] &quot;gds&quot;               &quot;gds_subset&quot;        &quot;geoConvert&quot;       
+##  [4] &quot;geodb_column_desc&quot; &quot;gpl&quot;               &quot;gse&quot;              
+##  [7] &quot;gse_gpl&quot;           &quot;gse_gsm&quot;           &quot;gsm&quot;              
+## [10] &quot;metaInfo&quot;          &quot;sMatrix&quot;          
+</code></pre>
+
+<pre><code class="r">
+dbListFields(con, &quot;gsm&quot;)
+</code></pre>
+
+<pre><code>##  [1] &quot;ID&quot;                     &quot;title&quot;                 
+##  [3] &quot;gsm&quot;                    &quot;series_id&quot;             
+##  [5] &quot;gpl&quot;                    &quot;status&quot;                
+##  [7] &quot;submission_date&quot;        &quot;last_update_date&quot;      
+##  [9] &quot;type&quot;                   &quot;source_name_ch1&quot;       
+## [11] &quot;organism_ch1&quot;           &quot;characteristics_ch1&quot;   
+## [13] &quot;molecule_ch1&quot;           &quot;label_ch1&quot;             
+## [15] &quot;treatment_protocol_ch1&quot; &quot;extract_protocol_ch1&quot;  
+## [17] &quot;label_protocol_ch1&quot;     &quot;source_name_ch2&quot;       
+## [19] &quot;organism_ch2&quot;           &quot;characteristics_ch2&quot;   
+## [21] &quot;molecule_ch2&quot;           &quot;label_ch2&quot;             
+## [23] &quot;treatment_protocol_ch2&quot; &quot;extract_protocol_ch2&quot;  
+## [25] &quot;label_protocol_ch2&quot;     &quot;hyb_protocol&quot;          
+## [27] &quot;description&quot;            &quot;data_processing&quot;       
+## [29] &quot;contact&quot;                &quot;supplementary_file&quot;    
+## [31] &quot;data_row_count&quot;         &quot;channel_count&quot;         
+</code></pre>
+
+<p>We can do similar sorts of queries using the SQLite database as we did on the website.</p>
+
+<p>However, some of the information is not linked the same way in GEOmetadb. For example, it is
+easy to find <strong>datasets</strong> related to human diabetes, but more complicated to find <strong>series</strong>, 
+because the organism is <em>not</em> part of the series table. However, we can exploit the fact that 
+<strong>GSE</strong> is included in the <strong>GSM</strong> table.</p>
+
+<pre><code class="r"># Can easily find datasets for human diabetes
+sQ &lt;- &quot;SELECT ID, gds, description, type, sample_organism FROM gds WHERE description LIKE &#39;%diabetes%&#39; AND sample_organism=&#39;Homo sapiens&#39;&quot;
+dbRes &lt;- dbGetQuery(con, sQ)
+dbRes
+</code></pre>
+
+<pre><code>##      ID     gds
+## 1    73  GDS157
+## 2    74  GDS158
+## 3    75  GDS160
+## 4    76  GDS161
+## 5    77  GDS162
+## 6  1982 GDS2790
+## 7  1983 GDS2791
+## 8  2236 GDS3104
+## 9  2304 GDS3181
+## 10 2411 GDS3347
+## 11 2662 GDS3656
+## 12 2671 GDS3665
+## 13 2687 GDS3681
+##                                                                                                                                                                                                                                                                                                   description
+## 1                                                                                         Analysis of gene expression in pooled vastus lateralis muscle samples from insulin-sensitive and insulin-resistant equally obese, non-diabetic Pima Indians. A search for susceptibility genes for type 2 diabetes.
+## 2                                                                                         Analysis of gene expression in pooled vastus lateralis muscle samples from insulin-sensitive and insulin-resistant equally obese, non-diabetic Pima Indians. A search for susceptibility genes for type 2 diabetes.
+## 3                                                                                         Analysis of gene expression in pooled vastus lateralis muscle samples from insulin-sensitive and insulin-resistant equally obese, non-diabetic Pima Indians. A search for susceptibility genes for type 2 diabetes.
+## 4                                                                                         Analysis of gene expression in pooled vastus lateralis muscle samples from insulin-sensitive and insulin-resistant equally obese, non-diabetic Pima Indians. A search for susceptibility genes for type 2 diabetes.
+## 5                                                                                         Analysis of gene expression in pooled vastus lateralis muscle samples from insulin-sensitive and insulin-resistant equally obese, non-diabetic Pima Indians. A search for susceptibility genes for type 2 diabetes.
+## 6                  Analysis of skeletal muscles from non-diabetics after a 3 hour infusion of insulin. Glucose uptake by skeletal muscles in response to insulin is impaired in type 2 diabetes. Results provide insight into the molecular mechanisms regulating glucose homeostasis in response to insulin.
+## 7                  Analysis of skeletal muscles from non-diabetics after a 2 hour infusion of insulin. Glucose uptake by skeletal muscles in response to insulin is impaired in type 2 diabetes. Results provide insight into the molecular mechanisms regulating glucose homeostasis in response to insulin.
+## 8    Analysis of vastus lateralis muscles from women with insulin-resistant polycystic ovary syndrome (PCOS). Insulin resistance in skeletal muscles is a risk factor for the development of type 2 diabetes in women with PCOS. Results provide insight into the pathogenesis of insulin resistance in PCOS.
+## 9       Analysis of skeletal muscles from normal, healthy glucose-tolerant individuals exposed to acute physiological hyperinsulinemia for up to 4 hours. Results suggest a low-grade inflammatory response which may provide insight into the etiology of insulin resistance in type 2 diabetes and obesity.
+## 10          Analysis of cultured myotubes from obese patients with type 2 diabetes. Cultured human myotubes display the morphological, metabolic and biochemical properties of adult skeletal muscle. Results provide insight into the molecular mechanisms underlying insulin resistance in skeletal muscle.
+## 11 Analysis of endothelial progenitor cells (EPCs) from patients with type 1 diabetes (T1D) before and 4 weeks of dietary folic acid (FA) supplementation. EPCs are involved in vascular wall repair. T1D results in reduced circulating EPCs. Results provide insight into the effect of FA on EPC function.
+## 12                                                                                                                                                    Analysis of visceral adipose omentum tissues of obese women with type 2 diabetes mellitus. Age and BMI-matched glucose-tolerant women used as controls.
+## 13    Analysis of myotube cell lines established from type 2 diabetes (T2D) subjects. Insulin resistance and reduced mitochondrial biogenesis coexist early in T2D pathogenesis independent of hyperglycemia and obesity. Results provide insight into the effect of T2D on developing skeletal muscle cells.
+##                             type sample_organism
+## 1  Expression profiling by array    Homo sapiens
+## 2  Expression profiling by array    Homo sapiens
+## 3  Expression profiling by array    Homo sapiens
+## 4  Expression profiling by array    Homo sapiens
+## 5  Expression profiling by array    Homo sapiens
+## 6  Expression profiling by array    Homo sapiens
+## 7  Expression profiling by array    Homo sapiens
+## 8  Expression profiling by array    Homo sapiens
+## 9  Expression profiling by array    Homo sapiens
+## 10 Expression profiling by array    Homo sapiens
+## 11 Expression profiling by array    Homo sapiens
+## 12 Expression profiling by array    Homo sapiens
+## 13 Expression profiling by array    Homo sapiens
+</code></pre>
+
+<pre><code class="r">
+sQ_gse &lt;- &quot;SELECT gse FROM gse WHERE title LIKE &#39;%diabetes%&#39;&quot;
+db_gse &lt;- dbGetQuery(con, sQ_gse)
+head(db_gse)
+</code></pre>
+
+<pre><code>##       gse
+## 1   GSE11
+## 2  GSE121
+## 3  GSE634
+## 4 GSE1085
+## 5 GSE1659
+## 6 GSE1979
+</code></pre>
+
+<pre><code class="r">
+gseSrch &lt;- paste(&quot;&#39;&quot;, db_gse$gse, &quot;&#39;&quot;, sep = &quot;&quot;)
+gseSrch &lt;- paste(gseSrch, collapse = &quot;,&quot;, sep = &quot;&quot;)
+gseSrch &lt;- paste(&quot;(&quot;, gseSrch, &quot;)&quot;, sep = &quot;&quot;, collapse = &quot;&quot;)
+sQ_gsm &lt;- paste(&quot;SELECT * FROM gsm WHERE series_id IN &quot;, gseSrch, &quot; AND organism_ch1 IN (&#39;Homo sapiens&#39;)&quot;, 
+    sep = &quot;&quot;, collapse = &quot;&quot;)
+db_gsm &lt;- dbGetQuery(con, sQ_gsm)
+head(db_gsm)
+</code></pre>
+
+<pre><code>##      ID                                 title      gsm series_id     gpl
+## 1  5675 Regulated genes in diabetic placentas  GSM6154   GSE2956  GPL310
+## 2  8969                             P1 slide1  GSM9690    GSE634  GPL120
+## 3  8970                   P1 Cy5/Cy3 post/pre  GSM9691    GSE634  GPL120
+## 4  8984                             P2 Slide1  GSM9705    GSE634  GPL120
+## 5  8985                             P2 Slide2  GSM9706    GSE634  GPL120
+## 6 81595                              P2-3_N-3 GSM94202   GSE4117 GPL1708
+##                  status submission_date last_update_date    type
+## 1 Public on Apr 30 2003      2003-04-27       2005-05-27     RNA
+## 2 Public on Mar 01 2004      2003-09-05       2005-06-16 protein
+## 3 Public on Mar 01 2004      2003-09-05       2005-06-16 protein
+## 4 Public on Mar 01 2004      2003-09-05       2005-06-16 protein
+## 5 Public on Mar 01 2004      2003-09-05       2005-06-16 protein
+## 6 Public on Jul 29 2006      2006-01-29       2006-01-30     RNA
+##   source_name_ch1 organism_ch1
+## 1  human placenta Homo sapiens
+## 2    presentation Homo sapiens
+## 3       remission Homo sapiens
+## 4    presentation Homo sapiens
+## 5       remission Homo sapiens
+## 6            P2-3 Homo sapiens
+##                                                          characteristics_ch1
+## 1                                                                       &lt;NA&gt;
+## 2                                                                       &lt;NA&gt;
+## 3                                                                       &lt;NA&gt;
+## 4                                                                       &lt;NA&gt;
+## 5                                                                       &lt;NA&gt;
+## 6 before comedy show, patients with type 2 diabetes (diabetic nephropathy +)
+##   molecule_ch1 label_ch1 treatment_protocol_ch1 extract_protocol_ch1
+## 1    total RNA      &lt;NA&gt;                   &lt;NA&gt;                 &lt;NA&gt;
+## 2      protein      &lt;NA&gt;                   &lt;NA&gt;                 &lt;NA&gt;
+## 3      protein      &lt;NA&gt;                   &lt;NA&gt;                 &lt;NA&gt;
+## 4      protein      &lt;NA&gt;                   &lt;NA&gt;                 &lt;NA&gt;
+## 5      protein      &lt;NA&gt;                   &lt;NA&gt;                 &lt;NA&gt;
+## 6    total RNA       Cy5                   &lt;NA&gt;                 &lt;NA&gt;
+##   label_protocol_ch1 source_name_ch2 organism_ch2
+## 1               &lt;NA&gt;  human placenta Homo sapiens
+## 2               &lt;NA&gt;       remission Homo sapiens
+## 3               &lt;NA&gt;    presentation Homo sapiens
+## 4               &lt;NA&gt;       remission Homo sapiens
+## 5               &lt;NA&gt;    presentation Homo sapiens
+## 6               &lt;NA&gt;             N-3 Homo sapiens
+##                  characteristics_ch2 molecule_ch2 label_ch2
+## 1                               &lt;NA&gt;    total RNA      &lt;NA&gt;
+## 2                               &lt;NA&gt;      protein      &lt;NA&gt;
+## 3                               &lt;NA&gt;      protein      &lt;NA&gt;
+## 4                               &lt;NA&gt;      protein      &lt;NA&gt;
+## 5                               &lt;NA&gt;      protein      &lt;NA&gt;
+## 6 before comedy show, normal subject    total RNA       Cy3
+##   treatment_protocol_ch2 extract_protocol_ch2 label_protocol_ch2
+## 1                   &lt;NA&gt;                 &lt;NA&gt;               &lt;NA&gt;
+## 2                   &lt;NA&gt;                 &lt;NA&gt;               &lt;NA&gt;
+## 3                   &lt;NA&gt;                 &lt;NA&gt;               &lt;NA&gt;
+## 4                   &lt;NA&gt;                 &lt;NA&gt;               &lt;NA&gt;
+## 5                   &lt;NA&gt;                 &lt;NA&gt;               &lt;NA&gt;
+## 6                   &lt;NA&gt;                 &lt;NA&gt;               &lt;NA&gt;
+##   hyb_protocol
+## 1         &lt;NA&gt;
+## 2         &lt;NA&gt;
+## 3         &lt;NA&gt;
+## 4         &lt;NA&gt;
+## 5         &lt;NA&gt;
+## 6         &lt;NA&gt;
+##                                                                         description
+## 1 Quantitative modifications of up- and down-regulated genes in diabetic placentas.
+## 2    P1 Slide 1 labelled Cy5/Cy3 presentation/remission;\tLot batch = Lot 2090032-52
+## 3              Muscle P1 Cy5/Cy3 remission/presentation;\tLot batch = Lot 2090032-53
+## 4                Slide 1 P2 Cy5/Cy3 presentation/remission;\tLot batch = Lot 2090032
+## 5                 Slide2 P2 Cy5/Cy3 remission/presentation;\tLot batch = Lot 2090032
+## 6                                                   Sample Tissue: peripheral blood
+##                   data_processing
+## 1                            &lt;NA&gt;
+## 2                            &lt;NA&gt;
+## 3                            &lt;NA&gt;
+## 4                            &lt;NA&gt;
+## 5                            &lt;NA&gt;
+## 6 Global Normalization and Lowess
+##                                                                                                                                                                                                                                                                                                                                                     contact
+## 1                                                                                             Name: Sylvie Hauguel-de Mouzon;\tEmail: sdemouzon@aol.com;\tPhone: 33 1 44 27 65 31;\tLaboratory: UPRES 2396;\tDepartment: Hopital Saint Antoine;\tInstitute: Universite Paris6;\tAddress: 24 rue de Chaligny;\tCity: Paris;\tZip/postal_code: 75012;\tCountry: France
+## 2                                                                         Name: Donald,B.,Thomason;\tEmail: thomason@physio1.utmem.edu;\tPhone: 901-448-7224;\tFax: 901-448-7126;\tDepartment: Physiology;\tInstitute: The University of Tennessee Health Science Center;\tAddress: 894 Union Ave;\tCity: Memphis;\tState: TN;\tZip/postal_code: 38163;\tCountry: USA
+## 3                                                                         Name: Donald,B.,Thomason;\tEmail: thomason@physio1.utmem.edu;\tPhone: 901-448-7224;\tFax: 901-448-7126;\tDepartment: Physiology;\tInstitute: The University of Tennessee Health Science Center;\tAddress: 894 Union Ave;\tCity: Memphis;\tState: TN;\tZip/postal_code: 38163;\tCountry: USA
+## 4                                                                         Name: Donald,B.,Thomason;\tEmail: thomason@physio1.utmem.edu;\tPhone: 901-448-7224;\tFax: 901-448-7126;\tDepartment: Physiology;\tInstitute: The University of Tennessee Health Science Center;\tAddress: 894 Union Ave;\tCity: Memphis;\tState: TN;\tZip/postal_code: 38163;\tCountry: USA
+## 5                                                                         Name: Donald,B.,Thomason;\tEmail: thomason@physio1.utmem.edu;\tPhone: 901-448-7224;\tFax: 901-448-7126;\tDepartment: Physiology;\tInstitute: The University of Tennessee Health Science Center;\tAddress: 894 Union Ave;\tCity: Memphis;\tState: TN;\tZip/postal_code: 38163;\tCountry: USA
+## 6 Name: Toshiro Saito;\tEmail: toshiro@ls.hitachi.co.jp;\tPhone: +81-49-238-3529;\tFax: +81-49-238-3240;\tLaboratory: Biotechnology Center;\tDepartment: Life Science Group;\tInstitute: Hitachi, Ltd.;\tAddress: 1-3-1;\tCity: Minamidai, Kawagoe;\tState: Saitama;\tZip/postal_code: 350-1165;\tCountry: Japan;\tWeb_link: http://www.hitachi.co.jp/LS/eng/index.html
+##   supplementary_file data_row_count channel_count
+## 1                               435             2
+## 2                               768             2
+## 3                               768             2
+## 4                               768             2
+## 5                               768             2
+## 6                             41675             2
+</code></pre>
+
+<pre><code class="r">dim(db_gsm)
+</code></pre>
+
+<pre><code>## [1] 1044   32
+</code></pre>
+
+<pre><code class="r">length(unique(db_gsm$series_id))
+</code></pre>
+
+<pre><code>## [1] 27
+</code></pre>
+
+<p>Now what about all of the series that are attached to Affymetrix HGU 133 plus 2.0 arrays?</p>
+
+<pre><code class="r">gplQ &lt;- &quot;SELECT gpl FROM gpl WHERE title LIKE &#39;%U133 plus 2.0%&#39;&quot;
+gplRes &lt;- dbGetQuery(con, gplQ)
+</code></pre>
+
+<p>Disconnect database when done.</p>
+
+<pre><code class="r">dbDisconnect(con)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<h3>Differential Expression Analysis</h3>
+
+<p>Using the data downloaded previously and <code>Bioconductor</code> functions, we will attempt to determine
+those genes that are differentially expressed. </p>
+
+<pre><code class="r"># set default compression on saves, and don&#39;t use *Factors* in data frames
+options(stringsAsFactors = FALSE)
+require(affy)
+</code></pre>
+
+<pre><code>## Loading required package: affy
+</code></pre>
+
+<pre><code class="r">require(genefilter)
+</code></pre>
+
+<pre><code>## Loading required package: genefilter
+</code></pre>
+
+<pre><code class="r">require(limma)
+</code></pre>
+
+<pre><code>## Loading required package: limma
+</code></pre>
+
+<pre><code class="r">require(arrayQualityMetrics)
+</code></pre>
+
+<pre><code>## Loading required package: arrayQualityMetrics
+</code></pre>
+
+<pre><code class="r">require(ggplot2)
+</code></pre>
+
+<pre><code>## Loading required package: ggplot2
+</code></pre>
+
+<pre><code class="r">require(hgu133a2.db)
+</code></pre>
+
+<pre><code>## Loading required package: hgu133a2.db
+</code></pre>
+
+<pre><code>## Loading required package: AnnotationDbi
+</code></pre>
+
+<pre><code>## Loading required package: org.Hs.eg.db
+</code></pre>
+
+<pre><code>## 
+</code></pre>
+
+<pre><code>## 
+</code></pre>
+
+<h4>Read Data</h4>
+
+<pre><code class="r"># not evaluated because it takes a long time on my 2GB Ram machine
+celDir &lt;- &quot;GSE10797_RAW&quot;
+setwd(celDir)
+celDat &lt;- read.affybatch(filenames = dir())
+
+celDat
+setwd(&quot;..&quot;)
+</code></pre>
+
+<p>Unfortunately, this method makes it difficult to know which samples belong to which class
+(cancer, normal, stroma, epithelial, etc). We can use the <code>GEOmetadb</code> to get this information, 
+however. This is required to enable proper analysis of the data.</p>
+
+<h4>Sample Info</h4>
+
+<pre><code class="r">con &lt;- dbConnect(&quot;SQLite&quot;, &quot;GEOmetadb.sqlite&quot;)
+getDat &lt;- dbGetQuery(con, &quot;select title, gsm, series_id from gsm where series_id in (&#39;GSE10797&#39;)&quot;)
+splitSample &lt;- strsplit(getDat$title, &quot;_&quot;, fixed = T)
+head(splitSample)
+getDat$cancerType &lt;- sapply(splitSample, function(x) {
+    x[1]
+})
+head(getDat)
+getDat$tissueType &lt;- sapply(splitSample, function(x) {
+    x[2]
+})
+getDat$replicate &lt;- sapply(splitSample, function(x) {
+    x[3]
+})
+head(getDat)
+tmpDat &lt;- pData(celDat)
+class(tmpDat)
+getDat &lt;- getDat[order(getDat$gsm), ]
+tail(getDat)
+head(getDat)
+head(tmpDat)
+tmpDat &lt;- cbind(tmpDat, getDat)
+pData(celDat) &lt;- tmpDat
+
+.sessionInfo &lt;- sessionInfo()
+.timedate &lt;- Sys.time()
+save(celDat, .sessionInfo, .timedate, file = &quot;celData.RData&quot;)
+rm(list = ls())
+</code></pre>
+
+<h4>RMA Summarize</h4>
+
+<p><code>RMA</code> is one of the more popular methods for summarizing Affymetrix&reg; GeneChip&reg; data. 
+It only uses the <strong>PM</strong> probes, models probe behavior to do background correction, quantile
+normalization to force identical signal distributions, and then a median-polish to average
+the probe signals and generate a final value.</p>
+
+<pre><code class="r">load(&quot;celData.RData&quot;)
+rmaDat &lt;- rma(celDat)
+</code></pre>
+
+<pre><code>## 
+</code></pre>
+
+<pre><code>## Background correcting
+## Normalizing
+## Calculating Expression
+</code></pre>
+
+<pre><code class="r">.sessionInfo &lt;- sessionInfo()
+.timedate &lt;- Sys.time()
+save(.sessionInfo, .timedate, rmaDat, file = &quot;rmaData.RData&quot;)
+</code></pre>
+
+<h4>Quality Control</h4>
+
+<pre><code class="r"># this also takes a long time, the files are in the git repo.
+arrayQualityMetrics(celDat, outdir = &quot;rawData&quot;, do.logtransform = T, spatial = F, 
+    intgroup = c(&quot;tissueType&quot;, &quot;cancerType&quot;), force = T)
+arrayQualityMetrics(rmaDat, outdir = &quot;rmaData&quot;, do.logtransform = F, intgroup = c(&quot;tissueType&quot;, 
+    &quot;cancerType&quot;), force = T)
+</code></pre>
+
+<p>You should explore the ArrayQualityMetrics reports (<a href="rawData/index.html">celDat</a>, <a href="rmaData/index.html">rmaDat</a> ) to see what types of things get reported, and how some discrepancies
+are resolved due to normalization. </p>
+
+<pre><code class="r">rm(celDat)
+</code></pre>
+
+<h4>ProbeSet Filtering</h4>
+
+<p>There are two opinions on filtering before diff. expression analysis. </p>
+
+<ol>
+<li>Filter out the controls</li>
+<li>Filter out everything that may be irrelevent, including probesets with low variance and those that don&#39;t map to known genes</li>
+</ol>
+
+<p>Due to personal experience, and known issues with skewing results due to changing the numbers
+for multiple testing adjustment, I prefer <strong>1</strong>, filtering out as few items as required.</p>
+
+<pre><code class="r">rmaFilt &lt;- featureFilter(rmaDat, require.entrez = FALSE, remove.dupEntrez = FALSE, 
+    feature.exclude = &quot;^AFFX&quot;)
+rmaInt &lt;- exprs(rmaFilt)  # get the actual probeset intensities
+</code></pre>
+
+<h4>Design Setup</h4>
+
+<p>We want to be able to compare between the cancer and normal of each cell type, much like
+the original <a href="fulltext.pdf">paper</a>. So we will generate a new variable that is a combination
+of disease status and tissue, and use this in our design matrix.</p>
+
+<pre><code class="r">pD &lt;- pData(rmaDat)
+pD$cancer.tissue &lt;- paste(pD$cancerType, pD$tissueType, sep = &quot;.&quot;)
+
+f &lt;- factor(pD$cancer.tissue, levels = unique(pD$cancer.tissue))
+design &lt;- model.matrix(~0 + f)
+colnames(design) &lt;- c(&quot;CE&quot;, &quot;CS&quot;, &quot;NE&quot;, &quot;NS&quot;)
+
+rm(rmaDat, rmaFilt)
+</code></pre>
+
+<h4>Limma</h4>
+
+<p>We are using the <code>limma</code> package for the diff. expression analysis. <code>limma</code> allows one to 
+use bayesian methods to <em>borrow</em> variance information between genes / probesets. When the 
+number of samples is large (say 20 or more), the variance estimates don&#39;t change between
+borrowing and not. However, when the number of samples is small (say 3 - 5 in each class),
+this can be much more important.</p>
+
+<p><code>limma</code> has become a de-facto standard in the analysis of DNA microarrays, and that is
+partly why we use it here. We could also do a standard t-test, permuted t-tests, and lots
+of other things that have appeard in the literature.</p>
+
+<pre><code class="r">fit &lt;- lmFit(rmaInt, design)
+contrast.matrix &lt;- makeContrasts(&quot;CE - NE&quot;, &quot;CS - NS&quot;, levels = design)
+
+fit2 &lt;- contrasts.fit(fit, contrast.matrix)
+fit2 &lt;- eBayes(fit2)
+</code></pre>
+
+<p>The package provides some very nice functions to summarize the results. <code>decideTests</code> is one
+that provides a summary of the number of significant probesets / genes in each contrast.</p>
+
+<pre><code class="r">testRes &lt;- decideTests(fit2)
+sum(testRes[, &quot;CE - NE&quot;] == 1)
+</code></pre>
+
+<pre><code>## [1] 9
+</code></pre>
+
+<pre><code class="r">sum(testRes[, &quot;CE - NE&quot;] == -1)
+</code></pre>
+
+<pre><code>## [1] 232
+</code></pre>
+
+<pre><code class="r">sum(testRes[, &quot;CS - NS&quot;] == -1)
+</code></pre>
+
+<pre><code>## [1] 39
+</code></pre>
+
+<pre><code class="r">sum(testRes[, &quot;CS - NS&quot;] == 1)
+</code></pre>
+
+<pre><code>## [1] 7
+</code></pre>
+
+<p>However, <code>topTable</code> is probably the normal way you would get access to all the data you 
+would want to investigate the results. In this example, we will get all of the results so
+we can plot some things.</p>
+
+<pre><code class="r">ce.ne &lt;- topTable(fit2, coef = &quot;CE - NE&quot;, number = Inf, adjust.method = &quot;BH&quot;, 
+    p.value = 1)
+dim(ce.ne)
+</code></pre>
+
+<pre><code>## [1] 22215     7
+</code></pre>
+
+<pre><code class="r">head(ce.ne)
+</code></pre>
+
+<pre><code>##                ID  logFC AveExpr       t   P.Value adj.P.Val     B
+## 22200      823_at -3.847   3.022 -15.024 1.087e-22 2.414e-18 38.57
+## 3214    203687_at -3.234   2.936 -12.680 3.875e-19 4.304e-15 31.50
+## 4578  205051_s_at -4.499   3.693 -11.408 4.390e-17 3.251e-13 27.31
+## 19789 220425_x_at -3.869   3.198 -10.437 1.847e-15 1.019e-11 23.95
+## 5979  206453_s_at -3.768   4.229 -10.381 2.292e-15 1.019e-11 23.76
+## 21156   221796_at -4.567   3.385  -9.719 3.116e-14 1.154e-10 21.39
+</code></pre>
+
+<p>Lets look at the relationship between fold-change and p-value.</p>
+
+<pre><code class="r">plotDat &lt;- data.frame(lfc = ce.ne$logFC, pval = -1 * log10(ce.ne$P.Value))
+ggplot(plotDat, aes(x = lfc, y = pval)) + geom_point()
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk plotDat"/> </p>
+
+<pre><code class="r">
+plotDat2 &lt;- data.frame(lfc = ce.ne$logFC, pval = -1 * log10(ce.ne$adj.P.Val))
+ggplot(plotDat2, aes(x = lfc, y = pval)) + geom_point()
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk plotDat"/> </p>
+
+<h4>Gene IDs</h4>
+
+<p>Can we figure out which genes are diff. expressed? </p>
+
+<pre><code class="r">ce.ne.Diff &lt;- ce.ne[(ce.ne$adj.P.Val &lt;= 0.05), ]
+ce.ne.Diff$Entrez &lt;- unlist(mget(ce.ne.Diff$ID, hgu133a2ENTREZID, ifnotfound = NA))
+</code></pre>
+
+<p>See some <code>NA</code> values. i.e. there is no corresponding Entrez Gene. But Affymetrix&reg; doesn&#39;t
+tend to have probesets for no reason. What else could it be?</p>
+
+<pre><code class="r">ce.ne.Diff$ACC &lt;- unlist(mget(ce.ne.Diff$ID, hgu133a2ACCNUM, ifnotfound = NA))
+head(ce.ne.Diff)
+</code></pre>
+
+<pre><code>##                ID  logFC AveExpr       t   P.Value adj.P.Val     B Entrez
+## 22200      823_at -3.847   3.022 -15.024 1.087e-22 2.414e-18 38.57   6376
+## 3214    203687_at -3.234   2.936 -12.680 3.875e-19 4.304e-15 31.50   6376
+## 4578  205051_s_at -4.499   3.693 -11.408 4.390e-17 3.251e-13 27.31   3815
+## 19789 220425_x_at -3.869   3.198 -10.437 1.847e-15 1.019e-11 23.95   &lt;NA&gt;
+## 5979  206453_s_at -3.768   4.229 -10.381 2.292e-15 1.019e-11 23.76  57447
+## 21156   221796_at -4.567   3.385  -9.719 3.116e-14 1.154e-10 21.39   4915
+##             ACC
+## 22200    U84487
+## 3214  NM_002996
+## 4578  NM_000222
+## 19789 NM_017578
+## 5979  NM_016250
+## 21156  AA707199
+</code></pre>
+
+<p>Ok, so they definitely come from somewhere. Those are really big p-values (even adjusted),
+what does the raw data look like? i.e. just how different are they on the probe-scale?</p>
+
+<pre><code class="r">rm(fit, fit2, rmaInt, plotDat, plotDat2)
+load(&quot;celData.RData&quot;)
+
+pmInt &lt;- pm(celDat)
+useProbe &lt;- indexProbes(celDat, which = &quot;pm&quot;, genenames = &quot;823_at&quot;)
+
+useInt &lt;- log2(pmInt[as.character(useProbe[[1]]), ])
+rm(pmInt)
+
+ceIndx &lt;- as.logical(design[, &quot;CE&quot;])
+neIndx &lt;- as.logical(design[, &quot;NE&quot;])
+
+ceInt &lt;- useInt[, ceIndx]
+neInt &lt;- useInt[, neIndx]
+</code></pre>
+
+</body>
+
+</html>

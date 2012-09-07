@@ -141,6 +141,7 @@ require(genefilter)
 require(limma)
 require(arrayQualityMetrics)
 require(ggplot2)
+require(hgu133a2.db)
 ```
 
 #### Read Data
