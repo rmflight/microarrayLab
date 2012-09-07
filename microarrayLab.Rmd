@@ -89,7 +89,7 @@ require(arrayQualityMetrics)
 ```{r readData}
 celDir <- "GSE10797_RAW"
 setwd(celDir)
-celDat <- read.affybatch(filenames=dir(),cdfname="hgu133plus2cdf", )
+celDat <- read.affybatch(filenames=dir())
 
 celDat
 
@@ -113,6 +113,3 @@ tmpDat <- cbind(tmpDat, getDat)
 pData(celDat) <- tmpDat
 ```
 
-```{r qualityMetrics}
-arrayQualityMetrics(celDat, outdir="rawData", do.logtransform=T, intgroup="tissueType", spatial=F)
-```
