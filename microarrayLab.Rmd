@@ -92,9 +92,10 @@ setwd(celDir)
 celDat <- read.affybatch(filenames=dir())
 
 celDat
-
+setwd("..")
 ```
 ```{r generatePhenoDat}
+con <- dbConnect("SQLite", "GEOmetadb.sqlite")
 getDat <- dbGetQuery(con, "select title, gsm, series_id from gsm where series_id in ('GSE10797')")
 splitSample <- strsplit(getDat$title, "_", fixed=T)
 head(splitSample)
@@ -111,5 +112,18 @@ head(getDat)
 head(tmpDat)
 tmpDat <- cbind(tmpDat, getDat)
 pData(celDat) <- tmpDat
+
+.sessionInfo <- sessionInfo()
+.timedate <- Sys.time()
+save(celDat, .sessionInfo, .timedate, file="celData2.RData")
+```
+
+```{r sumRMA}
+rmaDat <- rma(celDat)
+```
+
+```{r qualityMetrics, eval=FALSE}
+arrayQualityMetrics(celDat, outdir="rawData", do.logtransform=T, spatial=F, intgroup=c("tissueType", "cancerType"), force=T)
+arrayQualityMetrics(rmaDat, outdir="rmaData", do.logtransform=F, intgroup=c("tissueType", "cancerType"), force=T)
 ```
 
