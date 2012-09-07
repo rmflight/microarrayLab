@@ -299,3 +299,37 @@ ggplot(plotDat, aes(x=lfc, y=pval)) + geom_point()
 plotDat2 <- data.frame(lfc=ce.ne$logFC, pval=-1*log10(ce.ne$adj.P.Val))
 ggplot(plotDat2, aes(x=lfc, y=pval)) + geom_point()
 ```
+
+#### Gene IDs
+
+Can we figure out which genes are diff. expressed? 
+
+```{r diffGenes}
+ce.ne.Diff <- ce.ne[(ce.ne$adj.P.Val <= 0.05),]
+ce.ne.Diff$Entrez <- unlist(mget(ce.ne.Diff$ID, hgu133a2ENTREZID, ifnotfound=NA))
+```
+
+See some `NA` values. i.e. there is no corresponding Entrez Gene. But Affymetrix(r) doesn't
+tend to have probesets for no reason. What else could it be?
+
+```{r diffOther}
+ce.ne.Diff$ACC <- unlist(mget(ce.ne.Diff$ID, hgu133a2ACCNUM, ifnotfound=NA))
+head(ce.ne.Diff)
+```
+
+Ok, so they definitely come from somewhere. Those are really big p-values (even adjusted),
+what does the raw data look like? i.e. just how different are they on the probe-scale?
+
+```{r probeLevel}
+rm(fit, fit2, rmaInt, plotDat, plotDat2)
+load("celData.RData")
+
+pmInt <- pm(celDat)
+useProbe <- indexProbes(celDat, which="pm", genenames="823_at")
+
+useInt <- log2(pmInt[as.character(useProbe[[1]]),])
+rm(pmInt)
+
+ceIndx <- as.logical(design[,'CE'])
+neIndx <- as.logical(design[,'NE'])
+
