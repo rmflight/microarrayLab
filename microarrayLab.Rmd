@@ -79,14 +79,15 @@ Start up `RStudio` and navigate to a directory above the GSE raw files.
 
 ```{r housekeeping}
 # set default compression on saves, and don't use *Factors* in data frames
-options(save.defaults=list(compress="xz"), stringsAsFactors=FALSE)
+options(stringsAsFactors=FALSE)
 require(affy)
 require(limma)
 require(arrayQualityMetrics)
 
 ```
 
-```{r readData}
+```{r readData, eval=FALSE}
+# not evaluated because it takes a long time on my 2GB Ram machine
 celDir <- "GSE10797_RAW"
 setwd(celDir)
 celDat <- read.affybatch(filenames=dir())
@@ -94,7 +95,7 @@ celDat <- read.affybatch(filenames=dir())
 celDat
 setwd("..")
 ```
-```{r generatePhenoDat}
+```{r generatePhenoDat, eval=FALSE}
 con <- dbConnect("SQLite", "GEOmetadb.sqlite")
 getDat <- dbGetQuery(con, "select title, gsm, series_id from gsm where series_id in ('GSE10797')")
 splitSample <- strsplit(getDat$title, "_", fixed=T)
@@ -115,15 +116,19 @@ pData(celDat) <- tmpDat
 
 .sessionInfo <- sessionInfo()
 .timedate <- Sys.time()
-save(celDat, .sessionInfo, .timedate, file="celData2.RData")
+save(celDat, .sessionInfo, .timedate, file="celData.RData")
 ```
 
 ```{r sumRMA}
+load("celData.RData")
 rmaDat <- rma(celDat)
 ```
 
 ```{r qualityMetrics, eval=FALSE}
+# this also takes a long time, the files are in the git repo.
 arrayQualityMetrics(celDat, outdir="rawData", do.logtransform=T, spatial=F, intgroup=c("tissueType", "cancerType"), force=T)
 arrayQualityMetrics(rmaDat, outdir="rmaData", do.logtransform=F, intgroup=c("tissueType", "cancerType"), force=T)
 ```
+
+
 
