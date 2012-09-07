@@ -335,5 +335,4 @@ neIndx <- as.logical(design[,'NE'])
 
 ceInt <- useInt[,ceIndx]
 neInt <- useInt[,neIndx]
-
-ceMn <- 
+```
