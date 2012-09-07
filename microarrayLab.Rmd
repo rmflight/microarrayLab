@@ -140,6 +140,7 @@ require(affy)
 require(genefilter)
 require(limma)
 require(arrayQualityMetrics)
+require(ggplot2)
 ```
 
 #### Read Data
@@ -266,4 +267,35 @@ contrast.matrix <- makeContrasts("CE - NE", "CS - NS", levels=design)
 
 fit2 <- contrasts.fit(fit, contrast.matrix)
 fit2 <- eBayes(fit2)
+```
+
+The package provides some very nice functions to summarize the results. `decideTests` is one
+that provides a summary of the number of significant probesets / genes in each contrast.
+
+```{r decideTests}
+testRes <- decideTests(fit2)
+sum(testRes[,'CE - NE'] == 1)
+sum(testRes[,'CE - NE'] == -1)
+sum(testRes[,'CS - NS'] == -1)
+sum(testRes[,'CS - NS'] == 1)
+```
+
+However, `topTable` is probably the normal way you would get access to all the data you 
+would want to investigate the results. In this example, we will get all of the results so
+we can plot some things.
+
+```{r topTable}
+ce.ne <- topTable(fit2, coef='CE - NE', number=Inf, adjust.method="BH", p.value=1)
+dim(ce.ne)
+head(ce.ne)
+```
+
+Lets look at the relationship between fold-change and p-value.
+
+```{r plotDat}
+plotDat <- data.frame(lfc=ce.ne$logFC, pval=-1*log10(ce.ne$P.Value))
+ggplot(plotDat, aes(x=lfc, y=pval)) + geom_point()
+
+plotDat2 <- data.frame(lfc=ce.ne$logFC, pval=-1*log10(ce.ne$adj.P.Val))
+ggplot(plotDat2, aes(x=lfc, y=pval)) + geom_point()
 ```
